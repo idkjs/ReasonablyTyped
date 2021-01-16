@@ -621,19 +621,21 @@ type parseDiagnostic = {
   code: int,
 };
 
+type end_ = int;
+type pos = int;
 type keyword = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
 }
 and identifier = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   escapedText: string,
   text: string,
 }
 and functionDeclaration = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   modifiers: array(node),
   name: node,
   typeParameters: array(node),
@@ -641,40 +643,40 @@ and functionDeclaration = {
   type_: node,
 }
 and interfaceDeclaration = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   modifiers: array(node),
   name: node,
   typeParameters: array(node),
   members: array(node),
 }
 and propertySignature = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   modifiers: array(node),
   name: node,
   questionToken: option(node),
   type_: node,
 }
 and questionToken = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
 }
 and typeAliasDeclaration = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   name: node,
   typeParameters: array(node),
   type_: node,
 }
 and typeLiteral = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   members: array(node),
 }
 and sourceFile = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   text: string,
   languageVersion: int,
   fileName: string,
@@ -686,21 +688,21 @@ and sourceFile = {
   parseDiagnostics: array(parseDiagnostic),
 }
 and parameter = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   dotDotDotToken: option(node),
   name: node,
   questionToken: option(node),
   type_: node,
 }
 and typeParameter = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   name: node,
 }
 and typeReference = {
-  pos: int,
-  end_: int,
+  pos,
+  end_,
   typeName: node,
 }
 and node =

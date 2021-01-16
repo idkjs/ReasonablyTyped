@@ -1,5 +1,5 @@
 dependencies:
-  '@glennsl/bs-json': 2.0.0_bs-platform@5.2.1
+  '@glennsl/bs-json': 2.0.0_bs-platform@7.3.2
   babel-code-frame: 6.26.0
   chalk: 2.4.2
   commander: 2.20.3
@@ -13,7 +13,7 @@ dependencies:
 devDependencies:
   '@glennsl/bs-jest': 0.4.10
   browserify: 16.5.2
-  bs-platform: 5.2.1
+  bs-platform: 7.3.2
   jest: 22.4.4
 lockfileVersion: 5.2
 packages:
@@ -206,9 +206,9 @@ packages:
     dev: true
     resolution:
       integrity: sha512-e9xpW/TcmiI5WJ+WY7EMru07tuOb3arZx90ELGu9JwxFFbkLwmhK38hu58smRs1dODhZdq1OFmqXP7f+/0sqQw==
-  /@glennsl/bs-json/2.0.0_bs-platform@5.2.1:
+  /@glennsl/bs-json/2.0.0_bs-platform@7.3.2:
     dependencies:
-      bs-platform: 5.2.1
+      bs-platform: 7.3.2
     dev: false
     peerDependencies:
       bs-platform: ^3.0.0
@@ -1422,12 +1422,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-TkOR1cQGdmXU9zW4YukWzWVSJwrxmNdADFbqbE3HFgQWe5wqZmOawqZ7J/8MPCwk/W8yY7Y0h+7mOtcZxLP23g==
-  /bs-platform/5.2.1:
+  /bs-platform/7.3.2:
     dev: true
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-3ISP+RBC/NYILiJnphCY0W3RTYpQ11JGa2dBBLVug5fpFZ0qtSaL3ZplD8MyjNeXX2bC7xgrWfgBSn8Tc9om7Q==
+      integrity: sha512-seJL5g4anK9la4erv+B2o2sMHQCxDF6OCRl9en3hbaUos/S3JsusQ0sPp4ORsbx5eXfHLYBwPljwKXlgpXtsgQ==
   /bser/2.1.1:
     dependencies:
       node-int64: 0.4.0
@@ -6156,7 +6156,7 @@ specifiers:
   '@glennsl/bs-json': ^2.0.0
   babel-code-frame: ^6.26.0
   browserify: ^16.1.1
-  bs-platform: 5.2.1
+  bs-platform: 7.3.2
   chalk: ^2.1.0
   commander: ^2.15.1
   css-tree: ^1.0.0-alpha.28

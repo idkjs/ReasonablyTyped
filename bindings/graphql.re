@@ -95,7 +95,7 @@ type loc = {
   end_: int,
   source
 };
-
+// type name = node;
 type document = {
   definitions: array(node),
   loc

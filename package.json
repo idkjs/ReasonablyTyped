@@ -46,7 +46,7 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
     "browserify": "^16.1.1",
-    "bs-platform": "5.2.1",
+    "bs-platform": "7.3.2",
     "jest": "^22.4.2"
   },
   "jest": {

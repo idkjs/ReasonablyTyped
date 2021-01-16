@@ -221,7 +221,7 @@ let react_component =
   ++ bsModule(module_name)
   ++ "\n"
   ++ "  external "
-  ++ String.uncapitalize(component_name)
+  ++ String.uncapitalize_ascii(component_name)
   ++ " : ReasonReact.reactClass = \""
   ++ js_name
   ++ "\""
@@ -261,10 +261,8 @@ let react_component =
                 | (false, false) => x
                 };
               List.map(
-                ((name, js, _t, optional, is_bool)) => (
-                  js,
-                  wrapArg(~optional, ~is_bool, name),
-                ),
+                ((name, js, _t, optional, is_bool)) =>
+                  (js, wrapArg(~optional, ~is_bool, name)),
                 props,
               );
             },
@@ -274,7 +272,7 @@ let react_component =
        ++ applyArgs(
             "ReasonReact.wrapJsForReason",
             [
-              "~reactClass=" ++ String.uncapitalize(component_name),
+              "~reactClass=" ++ String.uncapitalize_ascii(component_name),
               "~props",
               "children",
             ],

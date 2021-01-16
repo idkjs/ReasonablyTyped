@@ -1,7 +1,8 @@
 let unquote = str => {
   let has_start_quote = str.[0] == '"' || str.[0] == '\'';
   let has_end_quote =
-    str.[String.length(str) - 1] == '"' || str.[String.length(str) - 1] == '\'';
+    str.[String.length(str) - 1] == '"'
+    || str.[String.length(str) - 1] == '\'';
   if (has_start_quote && has_end_quote) {
     String.sub(str, 1, String.length(str) - 2);
   } else {
@@ -20,27 +21,29 @@ let normalize_keywords =
 
 let normalize_name = name => normalize_chars(name) |> normalize_keywords;
 
-let import_module_name = name => normalize_name(name) |> String.capitalize;
+let import_module_name = name =>
+  normalize_name(name) |> String.capitalize_ascii;
 
 let to_module_name = str => normalize_name(unquote(str));
 
-let to_type_param = str => "'" ++ String.uncapitalize(str) |> normalize_name;
+let to_type_param = str =>
+  "'" ++ String.uncapitalize_ascii(str) |> normalize_name;
 
 let rec split = (sep, str, acc) => {
   open String;
   let len = length(str);
   let first_index =
-    try (Some(index(str, sep))) {
+    try(Some(index(str, sep))) {
     | Not_found => None
     };
-  switch first_index {
+  switch (first_index) {
   | None => List.append(acc, [str])
   | Some(i) =>
     let beginning = min(len, i + 1);
     split(
       sep,
       sub(str, beginning, len - beginning),
-      List.append(acc, [sub(str, 0, max(0, beginning - 1))])
+      List.append(acc, [sub(str, 0, max(0, beginning - 1))]),
     );
   };
 };
@@ -55,7 +58,7 @@ let rec uniq =
 
 module Is = {
   let optional = type_of =>
-    switch type_of {
+    switch (type_of) {
     | BsTypeAst.Optional(_) => true
     | _ => false
     };
@@ -69,13 +72,16 @@ module Is = {
     List.for_all(
       fun
       | BsTypeAst.StringLiteral(_) => true
-      | _ => false
+      | _ => false,
     );
   let react_component =
     fun
     | BsTypeAst.Class(Some(Named(_params, "React$Component", None)), _props) =>
       true
-    | BsTypeAst.Class(Some(Named(_params, "Component", Some("React"))), _props) =>
+    | BsTypeAst.Class(
+        Some(Named(_params, "Component", Some("React"))),
+        _props,
+      ) =>
       true
     | BsTypeAst.Named(_params, "React$ComponentType", None) => true
     | BsTypeAst.Named(_params, "ComponentType", Some("React")) => true
@@ -84,7 +90,7 @@ module Is = {
     | BsTypeAst.Named(_params, "StatelessFunctionalComponent", Some("React")) =>
       true
     | BsTypeAst.Function({
-        returnType: Named(_ntype_params, "React$Element", None)
+        returnType: Named(_ntype_params, "React$Element", None),
       }) =>
       true
     | Function({returnType: Named(_ntype_params, "Element", Some("React"))}) =>
@@ -94,42 +100,42 @@ module Is = {
 
 module React = {
   let extract_component_type = component =>
-    switch component {
+    switch (component) {
     | BsTypeAst.Class(
         Some(Named([props, ..._params], "React$Component", None)),
-        _props
+        _props,
       ) => props
     | BsTypeAst.Class(
         Some(Named([props, ..._params], "Component", Some("React"))),
-        _props
+        _props,
       ) => props
     | BsTypeAst.Named([props, ..._params], "React$ComponentType", None) => props
     | BsTypeAst.Named([props, ..._params], "ComponentType", Some("React")) => props
     | BsTypeAst.Named(
         [props, ..._params],
         "React$StatelessFunctionalComponent",
-        None
+        None,
       ) => props
     | BsTypeAst.Named(
         [props, ..._params],
         "StatelessFunctionalComponent",
-        Some("React")
+        Some("React"),
       ) => props
     | BsTypeAst.Named([], _, None) => component
     | BsTypeAst.Function({
         formalParams: [(_param_name, props), ..._params],
-        returnType: Named(_ntype_params, "React$Element", None)
+        returnType: Named(_ntype_params, "React$Element", None),
       }) => props
     | BsTypeAst.Function({
         formalParams: [(_param_name, props), ..._params],
-        returnType: Named(_ntype_params, "Element", Some("React"))
+        returnType: Named(_ntype_params, "Element", Some("React")),
       }) => props
     | BsTypeAst.Object(_) => component
     | _ => Unit
     };
   let extract_props = (type_table, component) => {
     let component_type = extract_component_type(component);
-    switch component_type {
+    switch (component_type) {
     | Named(_, type_name, _) =>
       switch (Typetable.get(type_name, type_table)) {
       | Type(t) => t
@@ -148,7 +154,7 @@ let walk = replacer => {
     | None => t
     };
   let rec walk_type = (~recurse=true, walkable) =>
-    switch walkable {
+    switch (walkable) {
     | Function(func) as ft =>
       switch (replacer(ft)) {
       | Some(new_t) when recurse => walk_type(~recurse=false, new_t)
@@ -156,13 +162,16 @@ let walk = replacer => {
         Function({
           ...func,
           formalParams:
-            List.map(((name, t)) => (name, walk_type(t)), func.formalParams),
+            List.map(
+              ((name, t)) => (name, walk_type(t)),
+              func.formalParams,
+            ),
           restParam:
-            switch func.restParam {
+            switch (func.restParam) {
             | Some((name, t)) => Some((name, walk_type(t)))
             | None => None
             },
-          returnType: walk_type(func.returnType)
+          returnType: walk_type(func.returnType),
         })
       }
     | Object(fields) as ot =>
@@ -172,8 +181,8 @@ let walk = replacer => {
         Object(
           List.map(
             ((name, t, optional)) => (name, walk_type(t), optional),
-            fields
-          )
+            fields,
+          ),
         )
       }
     | Class(extends, fields) as ct =>
@@ -181,11 +190,11 @@ let walk = replacer => {
       | Some(new_t) when recurse => walk_type(~recurse=false, new_t)
       | _ =>
         Class(
-          switch extends {
+          switch (extends) {
           | Some(t) => Some(walk_type(t))
           | None => None
           },
-          List.map(((name, t)) => (name, walk_type(t)), fields)
+          List.map(((name, t)) => (name, walk_type(t)), fields),
         )
       }
     | Dict(t) as dt =>

@@ -1,7 +1,7 @@
 <h1 align="center"><img src="https://github.com/rrdelaney/ReasonablyTyped/raw/master/docs/logo.png"></h1>
 
 <pre align="center">
-  $ npm install --global reasonably-typed
+  $ npm install --global idkjs/reasonably-typed
 </pre>
 
 <h4 align="center">

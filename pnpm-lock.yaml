@@ -6165,5 +6165,5 @@ specifiers:
   jest: ^22.4.2
   meow: ^3.7.0
   prettier: ^1.11.1
-  reason: ^3.1.0
+  reason: 3.3.4
   typescript: ^2.7.2

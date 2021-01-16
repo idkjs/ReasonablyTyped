@@ -610,7 +610,7 @@ module Internal = {
   type node = {. "kind": SyntaxKind.t};
   [@bs.module "typescript"]
   external createSourceFile : (string, string, ScriptTarget.t, bool) => node =
-    "";
+    "createSourceFile";
 };
 
 type parseDiagnostic = {

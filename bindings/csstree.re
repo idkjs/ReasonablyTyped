@@ -43,8 +43,8 @@ module Internal = {
   };
   type node = {. "type": string};
   type ast;
-  [@bs.module "css-tree"] external parse : string => ast = "";
-  [@bs.module "css-tree"] external toPlainObject : ast => node = "";
+  [@bs.module "css-tree"] external parse : string => ast = "parse";
+  [@bs.module "css-tree"] external toPlainObject : ast => node = "toPlainObject";
 };
 
 type point = {

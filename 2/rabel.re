@@ -51,11 +51,11 @@ module Types = {
   };
 
   /** Creates a JS object type. ts is (key, value). */
-  let jsRecord = ts => {
+  let jsRecord = (ts) => {
     let fields =
       Array.map(ts, ((name, t)) => "\"" ++ name ++ "\": " ++ t ++ ", ");
 
-    "{. " ++ Js.Array.join(fields) ++ "}";
+    "{. " ++ Js.Array.joinWith("", fields) ++ "}";
   };
 
   let string = () => "string";

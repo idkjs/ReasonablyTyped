@@ -82,7 +82,7 @@ module Internal = {
     [@bs.module "graphql"] [@bs.new]
     external make : (string, string) => t = "Source";
   };
-  [@bs.module "graphql"] external parse : Source.t => node = "";
+  [@bs.module "graphql"] external parse : Source.t => node = "parse";
 };
 
 type source = {

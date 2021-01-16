@@ -84,6 +84,7 @@ let rec astToDotTyped = ast =>
           extends: None,
         }),
     })
+ | _ => raise(CannotExtractName);
   };
 
 let parse = (~name, ~source) => {

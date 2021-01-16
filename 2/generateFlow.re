@@ -9,6 +9,7 @@ let extractName = identifier =>
   switch (identifier) {
   | DotTyped.Identifier(id) => id
   | DotTyped.UnknownIdentifier => "Unknown"
+  | _ => raise(Errors2.Unimplemented)
   };
 
 let rec compileType =

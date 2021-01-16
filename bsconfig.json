@@ -1,11 +1,12 @@
 {
   "name": "reasonably-typed",
   "version": "2.0.0",
-  "sources": ["bindings", "src", "2"],
-  "bs-dependencies": ["@glennsl/bs-json", "flow-dev-tools"],
+  "sources": [ "bindings", "src", "2" ],
+  "bs-dependencies": [ "@glennsl/bs-json", "flow-dev-tools" ],
   "package-specs": {
     "module": "commonjs"
   },
   "refmt": 3,
-  "namespace": true
+  "namespace": true,
+  "warnings": { "number": "-30" }
 }

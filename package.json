@@ -7,9 +7,11 @@
   },
   "main": "lib/index.js",
   "scripts": {
+    "watch": "bsb -make-world -w",
     "test": "jest",
     "local": "node lib/js/2/cli.js",
-    "build": "bsb -clean-world -make-world",
+    "build": "bsb -make-world",
+    "clean": "bsb -clean-world",
     "build-docs": "browserify -e lib/index.js -o docs/retyped.js -s retyped"
   },
   "repository": {
@@ -44,7 +46,7 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
     "browserify": "^16.1.1",
-    "bs-platform": "^3.0.0",
+    "bs-platform": "5.2.1",
     "jest": "^22.4.2"
   },
   "jest": {

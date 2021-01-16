@@ -67,11 +67,11 @@ let program =
   |. Commander.parse(Commander.Process.argv)
   |. Args.decode;
 
-let filename = program |. Args.args |. Array.get(0) |. Option.getExn;
+let filename = program |. Args.argsGet |. Array.get(0) |. Option.getExn;
 
 let inputType =
   program
-  |. Args.input
+  |. Args.inputGet
   |. Option.mapWithDefault(
        inferInputTypeFromFileExtension(filename),
        optionToFileType,
@@ -79,11 +79,11 @@ let inputType =
 
 let outputType =
   program
-  |. Args.output
+  |. Args.outputGet
   |. Option.map(optionToFileType)
   |. Option.getWithDefault(Compiler2.Typed);
 
-let debug = program |. Args.debug |. Option.getWithDefault(false);
+let debug = program |. Args.debugGet |. Option.getWithDefault(false);
 
 let inputSource = Node.Fs.readFileAsUtf8Sync(filename);
 

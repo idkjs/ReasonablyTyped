@@ -4,8 +4,10 @@
   "sources": [ "bindings", "src", "2" ],
   "bs-dependencies": [ "@glennsl/bs-json", "flow-dev-tools" ],
   "package-specs": {
-    "module": "commonjs"
+    "module": "commonjs",
+    "in-source": false
   },
+  "suffix": ".bs.js",
   "refmt": 3,
   "namespace": true,
   "warnings": { "number": "-30" }

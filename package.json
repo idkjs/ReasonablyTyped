@@ -9,11 +9,17 @@
   "scripts": {
     "watch": "bsb -make-world -w",
     "test": "jest",
-    "local": "node lib/js/2/cli.js",
+    "local": "node lib/js/2/cli.bs.js",
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
     "build-docs": "browserify -e lib/index.js -o docs/retyped.js -s retyped",
-    "format": "find src -name \"*.re\" -or -name \"*.rei\"  | xargs bsrefmt --in-place"
+    "format": "find src -name \"*.re\" -or -name \"*.rei\"  | xargs bsrefmt --in-place",
+    "build:js": "bsb -clean-world -make-world",
+    "build:cli": "rollup -c rollup/rollup.config.cli.js",
+    "build:retyped2": "rollup -c rollup/rollup.config.retyped2.js",
+    "build:api": "rollup -c rollup/rollup.config.api.js",
+    "build:web": "rollup -c rollup/rollup.config.web.js",
+    "build:all": "yarn build:retyped2 && bsb -clean-world -make-world && rollup -c rollup/rollup.config.cli.js && rollup -c rollup/rollup.config.api.js"
   },
   "repository": {
     "type": "git",
@@ -45,10 +51,17 @@
     "typescript": "^4.1.3"
   },
   "devDependencies": {
+    "@babel/standalone": "^7.12.12",
     "@glennsl/bs-jest": "^0.6.0",
+    "@rollup/plugin-alias": "^3.1.1",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^11.1.0",
     "browserify": "^17.0.0",
     "bs-platform": "8.4.2",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "rollup": "^2.36.2",
+    "rollup-plugin-preserve-shebangs": "^0.2.0"
   },
   "jest": {
     "testEnvironment": "node",

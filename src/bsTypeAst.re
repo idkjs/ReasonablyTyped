@@ -2,7 +2,7 @@ type func = {
   typeParams: list(string),
   formalParams: list((string, t)),
   restParam: option((string, t)),
-  returnType: t
+  returnType: t,
 }
 and t =
   | Null

@@ -7,10 +7,10 @@ type t =
 
 let rec get = (key, table) => {
   let lookup =
-    try (List.assoc(key, table)) {
+    try(List.assoc(key, table)) {
     | Not_found => NotFound
     };
-  switch lookup {
+  switch (lookup) {
   | Variable(s) => get(s, table)
   | switch_ => switch_
   };
@@ -24,7 +24,7 @@ let create = statements =>
     | BsTypeAst.TypeDecl(id, _type_params, type_of) => (id, Type(type_of))
     | BsTypeAst.FuncDecl(id, type_of) => (id, Type(type_of))
     | _ => ("", None),
-    statements
+    statements,
   )
   |> List.filter(((key, _)) => key != "");
 
@@ -36,16 +36,16 @@ let show = table => {
         ++ id
         ++ " = "
         ++ (
-          switch typeof {
+          switch (typeof) {
           | Class => "Class"
           | None => "None"
           | NotFound => "NotFound"
           | Variable(s) => "typeof " ++ s
           | Type(t) => BsTypeFlow.show_type(t)
           }
-        )
+        ),
       ),
-    table
+    table,
   );
   print_newline();
 };

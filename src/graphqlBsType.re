@@ -21,15 +21,15 @@ let rec fieldToObjectProperty =
                  fun
                  | Graphql.InputValueDefinition(input) => (
                      getName(input.name),
-                     graphqlAstToBsType(input.type_)
+                     graphqlAstToBsType(input.type_),
                    )
-                 | _ => raise(Not_found)
+                 | _ => raise(Not_found),
                ),
           restParam: None,
-          returnType: graphqlAstToBsType(field.type_)
+          returnType: graphqlAstToBsType(field.type_),
         });
       },
-      Array.length(field.arguments) == 0
+      Array.length(field.arguments) == 0,
     )
   | _ => raise(Not_found)
 and graphqlAstToBsType =
@@ -44,14 +44,14 @@ let rec graphqlAstToBsTypeAst =
   | Graphql.Document(doc) =>
     BsTypeAst.ModuleDecl(
       "\"" ++ Genutils.normalize_name(doc.loc.source.name) ++ "\"",
-      doc.definitions |> Array.to_list |> List.map(graphqlAstToBsTypeAst)
+      doc.definitions |> Array.to_list |> List.map(graphqlAstToBsTypeAst),
     )
   | Graphql.ObjectTypeDefinition(def) =>
     BsTypeAst.InterfaceDecl(
       getName(def.name),
       [],
       BsTypeAst.Object(
-        def.fields |> Array.to_list |> List.map(fieldToObjectProperty)
-      )
+        def.fields |> Array.to_list |> List.map(fieldToObjectProperty),
+      ),
     )
   | _ => BsTypeAst.Noop;

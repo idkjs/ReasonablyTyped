@@ -12,7 +12,8 @@
     "local": "node lib/js/2/cli.js",
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
-    "build-docs": "browserify -e lib/index.js -o docs/retyped.js -s retyped"
+    "build-docs": "browserify -e lib/index.js -o docs/retyped.js -s retyped",
+    "format": "find src -name \"*.re\" -or -name \"*.rei\"  | xargs bsrefmt --in-place"
   },
   "repository": {
     "type": "git",
@@ -46,7 +47,7 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
     "browserify": "^16.1.1",
-    "bs-platform": "7.3.2",
+    "bs-platform": "8.4.2",
     "jest": "^22.4.2"
   },
   "jest": {

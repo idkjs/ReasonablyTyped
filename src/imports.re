@@ -4,10 +4,10 @@ module ImportTable = {
   let add = (name, from, table) => [(name, from), ...table];
   let get = (key, table: t) => {
     let lookup =
-      try (List.assoc(key, table)) {
+      try(List.assoc(key, table)) {
       | Not_found => ("NOT_FOUND", "NOT_FOUND")
       };
-    switch lookup {
+    switch (lookup) {
     | ("NOT_FOUND", "NOT_FOUND") => None
     | s => Some(s)
     };
@@ -26,9 +26,9 @@ module ImportTable = {
           )
           ++ " } from '"
           ++ module_name
-          ++ "'"
+          ++ "'",
         ),
-      table
+      table,
     );
     print_newline();
   };
@@ -36,7 +36,7 @@ module ImportTable = {
 
 type renameImportReducer = {
   imports: ImportTable.t,
-  statements: list(BsTypeAst.decl)
+  statements: list(BsTypeAst.decl),
 };
 
 let process_module = imports =>
@@ -47,23 +47,30 @@ let process_module = imports =>
         switch (ImportTable.get(name, imports)) {
         | Some((remote, source)) =>
           Some(
-            Named(params, remote, Some(Genutils.import_module_name(source)))
+            Named(
+              params,
+              remote,
+              Some(Genutils.import_module_name(source)),
+            ),
           )
         | _ => None
         }
-      | _s => None
-    )
+      | _s => None,
+    ),
   );
 
 let linker =
   List.fold_left(
     ({imports, statements}, statement) =>
-      switch statement {
+      switch (statement) {
       | BsTypeAst.ImportDecl(names, source) => {
           statements: statements @ [statement],
           imports:
             imports
-            @ List.map(((remote, local)) => (local, (remote, source)), names)
+            @ List.map(
+                ((remote, local)) => (local, (remote, source)),
+                names,
+              ),
         }
       | BsTypeAst.ModuleDecl(name, module_statements) => {
           imports,
@@ -72,13 +79,13 @@ let linker =
             @ [
               BsTypeAst.ModuleDecl(
                 name,
-                process_module(imports, module_statements)
-              )
-            ]
+                process_module(imports, module_statements),
+              ),
+            ],
         }
       | _ => {statements: statements @ [statement], imports}
       },
-    {imports: [], statements: []}
+    {imports: [], statements: []},
   );
 
 let show_imports = program => {

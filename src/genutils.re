@@ -210,12 +210,12 @@ let walk = replacer => {
     | Union(types) as ut =>
       switch (replacer(ut)) {
       | Some(new_t) when recurse => walk_type(~recurse=false, new_t)
-      | _ => Union(List.map(walk_type, types))
+      | _ => Union(List.map(walk_type(_), types))
       }
     | Tuple(types) as tt =>
       switch (replacer(tt)) {
       | Some(new_t) when recurse => walk_type(~recurse=false, new_t)
-      | _ => Tuple(List.map(walk_type, types))
+      | _ => Tuple(List.map(walk_type(_), types))
       }
     | Typeof(t) as tt =>
       switch (replacer(tt)) {
@@ -225,7 +225,7 @@ let walk = replacer => {
     | Named(types, value, module_name) as nt =>
       switch (replacer(nt)) {
       | Some(new_t) when recurse => walk_type(~recurse=false, new_t)
-      | _ => Named(List.map(walk_type, types), value, module_name)
+      | _ => Named(List.map(walk_type(_), types), value, module_name)
       }
     | Optional(t) as ot =>
       switch (replacer(ot)) {

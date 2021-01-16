@@ -1,12 +1,12 @@
 let inline_union_types = types =>
   List.map(((name, t)) =>
-    switch t {
+    switch (t) {
     | BsTypeAst.Named(type_params, type_name, _)
         when List.length(type_params) == 0 =>
       Typetable.(
         switch (Typetable.get(type_name, types)) {
         | Type(inner_type) =>
-          switch inner_type {
+          switch (inner_type) {
           | Union(_union_types) => (name, inner_type)
           | _ => (name, t)
           }
@@ -31,11 +31,11 @@ let optimize_statements = (types, statements) =>
     | BsTypeAst.FuncDecl(id, type_of) =>
       BsTypeAst.FuncDecl(id, optimize_function(types, type_of))
     | s => s,
-    statements
+    statements,
   );
 
 let optimize = (types: list((string, Typetable.t)), program) =>
-  switch program {
+  switch (program) {
   | BsTypeAst.ModuleDecl(id, statements) =>
     BsTypeAst.ModuleDecl(id, optimize_statements(types, statements))
   | s => s

@@ -11,7 +11,7 @@ let diagnosticOfFlow = (errors, source) =>
   errors
   |> List.map(((loc, _ty)) => {
        let {Loc.line, column} = Loc.(loc.start);
-       ({"source": source, "line": line, "column": column}) ;
+       {"source": source, "line": line, "column": column};
      })
   |> Array.of_list;
 
@@ -36,6 +36,6 @@ let diagnosticOfTs = sourceFile => {
   |> Array.map(d => {
        let {Typescript.start} = d;
        let (column, line) = computeColumnAndLine(text, start);
-       ({"source": text, "line": line, "column": column}) ;
+       {"source": text, "line": line, "column": column};
      });
 };

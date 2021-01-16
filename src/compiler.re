@@ -113,7 +113,7 @@ exception ReportableError(string);
 
 let compile = (moduleName, moduleSource, debug) => {
   let result =
-    try (
+    try(
       Stage.parseSource(moduleName, moduleSource)
       |> Imports.link
       |> List.map(Stage.optimizeAst)

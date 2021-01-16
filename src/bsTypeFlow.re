@@ -22,12 +22,12 @@ let rec show_type =
       let paramList =
         List.map(
           ((name, type_of)) =>
-            switch type_of {
+            switch (type_of) {
             | BsTypeAst.Unit => ""
             | BsTypeAst.Optional(t) => name ++ "?: " ++ show_type(t)
             | _ => name ++ ": " ++ show_type(type_of)
             },
-          formalParams
+          formalParams,
         );
       (List.length(typeParams) > 0 ? "<" : "")
       ++ String.concat(", ", typeParams)
@@ -35,7 +35,7 @@ let rec show_type =
       ++ "("
       ++ String.concat(", ", paramList)
       ++ (
-        switch restParam {
+        switch (restParam) {
         | Some((name, type_of)) =>
           (List.length(paramList) > 0 ? ", " : "")
           ++ "..."
@@ -52,7 +52,8 @@ let rec show_type =
   | BsTypeAst.Number => "number"
   | BsTypeAst.Boolean => "boolean"
   | BsTypeAst.String => "string"
-  | BsTypeAst.Union(types) => String.concat(" | ", List.map(show_type, types))
+  | BsTypeAst.Union(types) =>
+    String.concat(" | ", List.map(show_type, types))
   | BsTypeAst.Object(props) =>
     "{ "
     ++ String.concat(
@@ -65,20 +66,20 @@ let rec show_type =
                format_obj_key(key)
                ++ (optional ? "?" : "")
                ++ (
-                 switch prop {
+                 switch (prop) {
                  | BsTypeAst.Function(_) => ""
                  | _ => ": "
                  }
                )
                ++ show_type(prop);
              },
-           props
-         )
+           props,
+         ),
        )
     ++ " }"
   | BsTypeAst.Class(extends, props) =>
     (
-      switch extends {
+      switch (extends) {
       | None => ""
       | Some(parent) => " extends " ++ show_type(parent)
       }
@@ -86,14 +87,16 @@ let rec show_type =
     ++ "{ "
     ++ String.concat(
          "; ",
-         List.map(((key, prop)) => key ++ ": " ++ show_type(prop), props)
+         List.map(((key, prop)) => key ++ ": " ++ show_type(prop), props),
        )
     ++ " }"
   | BsTypeAst.Named(type_params, s, _) =>
     s
     ++ (
       if (List.length(type_params) > 0) {
-        "<" ++ (List.map(show_type, type_params) |> String.concat(", ")) ++ ">";
+        "<"
+        ++ (List.map(show_type, type_params) |> String.concat(", "))
+        ++ ">";
       } else {
         "";
       }
@@ -141,8 +144,8 @@ let rec show_decl =
              } else {
                remote ++ " as " ++ local;
              },
-           import_names
-         )
+           import_names,
+         ),
        )
     ++ " } from '"
     ++ module_name

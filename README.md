@@ -1,6 +1,7 @@
 <h1 align="center"><img src="https://github.com/rrdelaney/ReasonablyTyped/raw/master/docs/logo.png"></h1>
 
 <pre align="center">
+<!-- have not figured out packaging for install yet. Running locally with `node lib/cli.js ./_test.js --debug` works -->
   $ npm install --global idkjs/reasonably-typed
 </pre>
 

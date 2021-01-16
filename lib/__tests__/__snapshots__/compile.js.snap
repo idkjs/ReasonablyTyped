@@ -36,16 +36,19 @@ exports[`Compile component.re 1`] = `
 "type props = {
   .
   \\"input\\": Js.Nullable.t(string),
-  \\"b\\": Js.Nullable.t(Js.boolean)
+  \\"b\\": Js.Nullable.t(Js.boolean),
 };
 
 module ReactComponent = {
   [@bs.module \\"react-component\\"]
-  external reactComponent : ReasonReact.reactClass = \\"ReactComponent\\";
+  external reactComponent: ReasonReact.reactClass = \\"ReactComponent\\";
   let make = (~input=?, ~b=?, children) => {
     let props: props = {
       \\"input\\": Js.Nullable.from_opt(input),
-      \\"b\\": Js.Nullable.bind(Js.Nullable.from_opt(b), [@bs] ((x) => Js.Boolean.to_js_boolean(x)))
+      \\"b\\":
+        Js.Nullable.bind(Js.Nullable.from_opt(b), (. x) =>
+          Js.Boolean.to_js_boolean(x)
+        ),
     };
     ReasonReact.wrapJsForReason(~reactClass=reactComponent, ~props, children);
   };
@@ -186,8 +189,8 @@ exports[`Compile simple.re 2`] = `
 
 exports[`Compile simple-class.re 1`] = `
 "module Test = {
-  type t = {. \\"action\\": 't 's .[@bs.meth] (float => string)};
-  [@bs.new] [@bs.module \\"simple-class\\"] external make : string => t = \\"Test\\";
+  type t = {. \\"action\\": 't 's. [@bs.meth] (float => string)};
+  [@bs.new] [@bs.module \\"simple-class\\"] external make: string => t = \\"Test\\";
 };
 "
 `;

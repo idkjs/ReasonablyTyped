@@ -5,4 +5,4 @@ external add :
     ~y: [@bs.unwrap] [ | `Number(float) | `String(string)]
   ) =>
   float =
-  "";
+  "add";
